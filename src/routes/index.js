@@ -5,6 +5,7 @@ import userRoute from './user.route';
 import bookRoute from './book.route';
 import wishlistRoute from './wishlist.route';
 import cartRoute from './cart.route';
+import customerRoute from './customer.route';
 
 const routes = () => {
   router.get('/', (req, res) => {
@@ -14,6 +15,7 @@ const routes = () => {
   router.use('/books', bookRoute);
   router.use('/wishlist', wishlistRoute);
   router.use('/cart', cartRoute);
+  router.use('/customer', customerRoute);
 
   return router;
 };
