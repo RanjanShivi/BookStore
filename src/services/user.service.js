@@ -1,39 +1,39 @@
 import User from '../models/user.model';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-//get all users
-export const getAllUsers = async () => {
-  const data = await User.find();
-  return data;
+export const registerUser = async (body) => {
+  const userData = await User.findOne({email: body.email})
+  if(userData){
+  throw new Error('User already exist')
+  }
+  else{
+    const salt = await bcrypt.genSalt(10);
+    body.password = bcrypt.hashSync(body.password, salt)
+    const data = await User.create(body);
+    return data;
+  }
+
 };
 
-//create new user
-export const newUser = async (body) => {
-  const data = await User.create(body);
-  return data;
-};
-
-//update single user
-export const updateUser = async (_id, body) => {
-  const data = await User.findByIdAndUpdate(
-    {
-      _id
-    },
-    body,
-    {
-      new: true
+export const loginUser = async (body) => {
+  const checkData = await User.findOne({email: body.email})
+  if(checkData){
+    console.log("checkdata:------", checkData)
+    const validPassword = await bcrypt.compare(body.password, checkData.password);
+    if(validPassword){
+      let token = jwt.sign({"id": checkData._id}, process.env.SECRET_KEY1);
+      body.token = token;
+      console.log("body:-----", body)
+      return body.token;
     }
-  );
-  return data;
-};
+    else{
+      throw new Error('Invalid Password!!');
+    }
+  }
+  else{
+    throw new Error('User does not exist. Enter correct email');
+  }
 
-//delete single user
-export const deleteUser = async (id) => {
-  await User.findByIdAndDelete(id);
-  return '';
-};
+}
 
-//get single user
-export const getUser = async (id) => {
-  const data = await User.findById(id);
-  return data;
-};
