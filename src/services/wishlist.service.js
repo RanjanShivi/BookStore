@@ -9,22 +9,15 @@ export const createWishlist = async (bookId, body) => {
     else {
         const wishlistPresent = await Wishlist.findOne({ userId: body.userId })
         if (wishlistPresent) {
-            const bookPresentInWishlist = await Wishlist.findOne({ bookId: bookId })
-            if (bookPresentInWishlist) {
-                throw new Error('Book already present in Wishlist')
-            } else {
-                let newBook = {
-                    bookId: searchBook._id,
-                    bookName: searchBook.bookName,
-                    description: searchBook.description,
-                    author: searchBook.author,
-                    price: searchBook.price
-
-                }
-                wishlistPresent.book.push(newBook);
-                return wishlistPresent
+            let newBook = {
+                bookId: searchBook._id,
+                bookName: searchBook.bookName,
+                description: searchBook.description,
+                author: searchBook.author,
+                price: searchBook.price
             }
-
+            wishlistPresent.book.push(newBook);
+            return wishlistPresent
         } else {
             let newWishlist = Wishlist.create({
                 'userId': body.userId,
@@ -42,8 +35,8 @@ export const createWishlist = async (bookId, body) => {
     }
 };
 
-export const getWishlistItems = async (userID) => {
-    const data = await Wishlist.find({ userID: userID });
+export const getWishlistItems = async (userId) => {
+    const data = await Wishlist.find({ userId: userId });
     if (data.length === 0) {
         throw new Error("Items Not Present")
     }

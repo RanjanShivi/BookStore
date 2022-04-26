@@ -19,7 +19,7 @@ export const createWishlist = async (req, res) => {
 
   export const getWishlistItems = async (req, res) => {
     try {
-        const data = await WishlistService.getWishlistItems(req.body.userID);
+        const data = await WishlistService.getWishlistItems(req.body.userId);
         res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: data,
