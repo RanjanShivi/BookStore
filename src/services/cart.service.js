@@ -81,7 +81,7 @@ export const updateCartItems = async (bookId, body) => {
             return updateCart
 
         } else {
-            throw new Error('book not present in cart');
+            throw new Error('Book not present in cart');
         }
     } else {
         throw new Error('Cart not present');
