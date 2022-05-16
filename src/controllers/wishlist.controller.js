@@ -1,9 +1,9 @@
 import HttpStatus from 'http-status-codes';
 import * as WishlistService from '../services/wishlist.service.js';
 
-export const createWishlist = async (req, res) => {
+export const addWishlist = async (req, res) => {
     try {
-      const data = await WishlistService.createWishlist(req.params._id, req.body);
+      const data = await WishlistService.addWishlist(req.params._id, req.body);
       res.status(HttpStatus.CREATED).json({
         code: HttpStatus.CREATED, 
         data: data,
@@ -35,7 +35,7 @@ export const createWishlist = async (req, res) => {
 
   export const deleteWishlistItems = async (req, res) => {
     try {
-      const data = await WishlistService.deleteWishlistItems(req.params._id);
+      const data = await WishlistService.deleteWishlistItems(req.params._id, req.body);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK, 
         data: data,

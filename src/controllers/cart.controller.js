@@ -51,7 +51,7 @@ export const createCart = async (req, res) => {
 
   export const deleteCartItems = async (req, res) => {
     try {
-      const data = await CartService.deleteCartItems(req.params._id);
+      const data = await CartService.deleteCartItems(req.params._id,req.body);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK, 
         data: data,

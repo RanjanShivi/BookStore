@@ -7,7 +7,6 @@ const customerSchema = new Schema(
             type: String,
             default: 'Home'
         },
-
         fullAdress: {
             type: String
         },
